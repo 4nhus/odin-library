@@ -34,7 +34,7 @@ function createBookDiv(book) {
 
 function displayNewBook() {
     const library = document.getElementById('library');
-    library.appendChild(createBookDiv(mylibrary[mylibrary.length -1]));
+    library.appendChild(createBookDiv(mylibrary[mylibrary.length - 1]));
 }
 
 const dialog = document.querySelector('dialog');
@@ -50,10 +50,13 @@ addBookButton.addEventListener('click', () => {
     const bookAuthor = document.getElementById('author').value;
     const bookNumPages = document.getElementById('num-pages').value;
     const bookHasBeenRead = document.getElementById('has-been-read').value === 'true';
+    const form = document.querySelector('form');
+    form.reset();
 
     addBookToLibrary(new Book(bookTitle, bookAuthor, bookNumPages, bookHasBeenRead));
     displayNewBook();
     dialog.close();
+
 });
 
 
