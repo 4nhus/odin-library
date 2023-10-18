@@ -1,8 +1,8 @@
 const mylibrary = [];
 
-function Book(author, title, numPages, hasBeenRead) {
-    this.author = author;
+function Book(title, author, numPages, hasBeenRead) {
     this.title = title;
+    this.author = author;
     this.numPages = numPages;
     this.hasBeenRead = hasBeenRead;
 }
@@ -22,7 +22,7 @@ function createBookDiv(book) {
     const bookNumPages = document.createElement('p');
     bookNumPages.textContent = book.numPages;
     const bookHasBeenRead = document.createElement('p');
-    bookHasBeenRead.textContent = book.hasBeenRead;
+    bookHasBeenRead.textContent = `book has been read: ${book.hasBeenRead ? 'yes' : 'no'}`;
 
     bookDiv.appendChild(bookTitle);
     bookDiv.appendChild(bookAuthor);
@@ -32,12 +32,28 @@ function createBookDiv(book) {
     return bookDiv;
 }
 
-function displayBooks() {
-    const library = document.querySelector('#library');
-
-    mylibrary.forEach(book => {
-        library.appendChild(createBookDiv(book));
-    })
+function displayNewBook() {
+    const library = document.getElementById('library');
+    library.appendChild(createBookDiv(mylibrary[mylibrary.length -1]));
 }
 
-displayBooks();
+const dialog = document.querySelector('dialog');
+const newBookButton = document.getElementById('new-book');
+const addBookButton = document.getElementById('add-book');
+
+newBookButton.addEventListener('click', () => {
+    dialog.showModal();
+});
+
+addBookButton.addEventListener('click', () => {
+    const bookTitle = document.getElementById('title').value;
+    const bookAuthor = document.getElementById('author').value;
+    const bookNumPages = document.getElementById('num-pages').value;
+    const bookHasBeenRead = document.getElementById('has-been-read').value === 'true';
+
+    addBookToLibrary(new Book(bookTitle, bookAuthor, bookNumPages, bookHasBeenRead));
+    displayNewBook();
+    dialog.close();
+});
+
+
