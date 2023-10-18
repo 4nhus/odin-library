@@ -1,18 +1,62 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: -apple-systrem, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
 }
 
 body {
     width: 100vw;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body > button {
+    padding: 10px;
 }
 
 #library {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, calc(100% / 4)));
 }
 
 .book {
+    border: dimgrey solid 1px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
+.book > * {
+    white-space: nowrap;
+}
+
+h1, h3 {
+    align-self: center;
+}
+
+dialog {
+    margin: auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    gap: 20px;
+}
+
+form > div {
+    display: flex;
+    gap: 10px
+}
+
+form > div > * {
+    flex: auto;
+}
+
+::backdrop {
+    background-color: black;
+    opacity: 0.5;
 }

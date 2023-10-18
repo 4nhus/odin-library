@@ -17,12 +17,12 @@ function createBookDiv(book) {
 
     const bookTitle = document.createElement('h1');
     bookTitle.textContent = book.title;
-    const bookAuthor = document.createElement('h2');
-    bookAuthor.textContent = book.author;
+    const bookAuthor = document.createElement('h3');
+    bookAuthor.textContent = `by ${book.author}`;
     const bookNumPages = document.createElement('p');
-    bookNumPages.textContent = book.numPages;
+    bookNumPages.textContent = `Number of pages: ${book.numPages}`;
     const bookHasBeenRead = document.createElement('p');
-    bookHasBeenRead.textContent = `book has been read: ${book.hasBeenRead ? 'yes' : 'no'}`;
+    bookHasBeenRead.textContent = `Book has been read: ${book.hasBeenRead ? 'yes' : 'no'}`;
     const bookDelete = document.createElement('button');
     bookDelete.textContent = 'Delete book';
     bookDelete.addEventListener('click', () => {
@@ -43,7 +43,7 @@ function createBookDiv(book) {
     toggleBookRead.textContent = 'Toggle read status of book';
     toggleBookRead.addEventListener('click', () => {
         book.hasBeenRead = !book.hasBeenRead;
-        bookHasBeenRead.textContent = `book has been read: ${book.hasBeenRead ? 'yes' : 'no'}`;
+        bookHasBeenRead.textContent = `Book has been read: ${book.hasBeenRead ? 'yes' : 'no'}`;
     });
 
     bookDiv.appendChild(bookTitle);
