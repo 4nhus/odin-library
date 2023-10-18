@@ -23,11 +23,18 @@ function createBookDiv(book) {
     bookNumPages.textContent = book.numPages;
     const bookHasBeenRead = document.createElement('p');
     bookHasBeenRead.textContent = `book has been read: ${book.hasBeenRead ? 'yes' : 'no'}`;
+    const bookDelete = document.createElement('button');
+    bookDelete.classList.add('delete');
+    bookDelete.textContent = 'Delete book';
+    bookDelete.addEventListener('click', () => {
+        document.getElementById('library').removeChild(bookDiv);
+    });
 
     bookDiv.appendChild(bookTitle);
     bookDiv.appendChild(bookAuthor);
     bookDiv.appendChild(bookNumPages);
     bookDiv.appendChild(bookHasBeenRead);
+    bookDiv.appendChild(bookDelete);
 
     return bookDiv;
 }
@@ -50,13 +57,15 @@ addBookButton.addEventListener('click', () => {
     const bookAuthor = document.getElementById('author').value;
     const bookNumPages = document.getElementById('num-pages').value;
     const bookHasBeenRead = document.getElementById('has-been-read').value === 'true';
-    const form = document.querySelector('form');
-    form.reset();
 
-    addBookToLibrary(new Book(bookTitle, bookAuthor, bookNumPages, bookHasBeenRead));
-    displayNewBook();
-    dialog.close();
+    if (bookTitle && bookAuthor && bookNumPages) {
+        const form = document.querySelector('form');
+        form.reset();
 
+        addBookToLibrary(new Book(bookTitle, bookAuthor, bookNumPages, bookHasBeenRead));
+        displayNewBook();
+        dialog.close();
+    }
 });
 
 
