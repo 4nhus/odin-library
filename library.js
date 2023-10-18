@@ -1,3 +1,5 @@
+let globalId = 0;
+
 const mylibrary = [];
 
 function Book(title, author, numPages, hasBeenRead) {
@@ -5,6 +7,8 @@ function Book(title, author, numPages, hasBeenRead) {
     this.author = author;
     this.numPages = numPages;
     this.hasBeenRead = hasBeenRead;
+    this.id = globalId;
+    globalId++;
 }
 
 function addBookToLibrary(book) {
@@ -14,6 +18,7 @@ function addBookToLibrary(book) {
 function createBookDiv(book) {
     const bookDiv = document.createElement('div');
     bookDiv.classList.add('book');
+    bookDiv.id = book.id;
 
     const bookTitle = document.createElement('h1');
     bookTitle.textContent = book.title;
@@ -28,6 +33,18 @@ function createBookDiv(book) {
     bookDelete.textContent = 'Delete book';
     bookDelete.addEventListener('click', () => {
         document.getElementById('library').removeChild(bookDiv);
+
+        let index = 0;
+        for (const libraryBook of mylibrary) {
+            if (libraryBook.id === book.id) {
+                mylibrary.splice(index, 1);
+                continue;
+            }
+
+            index++;
+        }
+
+        console.log(mylibrary);
     });
 
     bookDiv.appendChild(bookTitle);
@@ -39,9 +56,9 @@ function createBookDiv(book) {
     return bookDiv;
 }
 
-function displayNewBook() {
+function displayBook(book) {
     const library = document.getElementById('library');
-    library.appendChild(createBookDiv(mylibrary[mylibrary.length - 1]));
+    library.appendChild(book);
 }
 
 const dialog = document.querySelector('dialog');
@@ -62,8 +79,9 @@ addBookButton.addEventListener('click', () => {
         const form = document.querySelector('form');
         form.reset();
 
-        addBookToLibrary(new Book(bookTitle, bookAuthor, bookNumPages, bookHasBeenRead));
-        displayNewBook();
+        const book = new Book(bookTitle, bookAuthor, bookNumPages, bookHasBeenRead);
+        addBookToLibrary(book);
+        displayBook(createBookDiv(book));
         dialog.close();
     }
 });
