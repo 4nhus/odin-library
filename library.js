@@ -1,15 +1,40 @@
-const mylibrary = [];
+class Library {
+    library = document.getElementById('library');
+    books = [];
 
-function Book(title, author, numPages, hasBeenRead) {
-    this.title = title;
-    this.author = author;
-    this.numPages = numPages;
-    this.hasBeenRead = hasBeenRead;
+    addBook(book) {
+        this.books.push(book);
+    }
+
+    removeBook(book) {
+        let index = 0;
+
+        for (const libraryBook of this.books) {
+            if (libraryBook === book) {
+                this.books.splice(index, 1);
+                continue;
+            }
+
+            index++;
+        }
+    }
+
+    displayBook(book) {
+        this.library.appendChild(book);
+    }
 }
 
-function addBookToLibrary(book) {
-    mylibrary.push(book);
+class Book {
+    constructor(title, author, numPages, hasBeenRead) {
+        this.title = title;
+        this.author = author;
+        this.numPages = numPages;
+        this.hasBeenRead = hasBeenRead;
+    }
 }
+
+const myLibrary = new Library();
+
 
 function createBookDiv(book) {
     const bookDiv = document.createElement('div');
@@ -28,15 +53,7 @@ function createBookDiv(book) {
     bookDelete.addEventListener('click', () => {
         document.getElementById('library').removeChild(bookDiv);
 
-        let index = 0;
-        for (const libraryBook of mylibrary) {
-            if (libraryBook === book) {
-                mylibrary.splice(index, 1);
-                continue;
-            }
-
-            index++;
-        }
+        myLibrary.removeBook(book);
     });
 
     const toggleBookRead = document.createElement('button');
@@ -54,11 +71,6 @@ function createBookDiv(book) {
     bookDiv.appendChild(toggleBookRead);
 
     return bookDiv;
-}
-
-function displayBook(book) {
-    const library = document.getElementById('library');
-    library.appendChild(book);
 }
 
 const dialog = document.querySelector('dialog');
@@ -80,8 +92,8 @@ addBookButton.addEventListener('click', () => {
         form.reset();
 
         const book = new Book(bookTitle, bookAuthor, bookNumPages, bookHasBeenRead);
-        addBookToLibrary(book);
-        displayBook(createBookDiv(book));
+        myLibrary.addBook(book);
+        myLibrary.displayBook(createBookDiv(book));
         dialog.close();
     }
 });
